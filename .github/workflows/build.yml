@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout project
@@ -29,12 +29,7 @@ jobs:
           sudo apt install -y cmake gcc-arm-none-eabi libnewlib-arm-none-eabi build-essential gcc wget tar clang-format
 
       - name: Checkout pico-sdk
-        uses: actions/checkout@v6.0.3
-        with:
-          repository: raspberrypi/pico-sdk
-          path: pico-sdk
-          submodules: true
-          ref: 2.1.1
+        run: make pico-sdk
 
       - name: Set PICO_SDK_PATH
         run: echo "PICO_SDK_PATH=$GITHUB_WORKSPACE/pico-sdk" >> $GITHUB_ENV

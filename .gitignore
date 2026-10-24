@@ -14,6 +14,7 @@ compile_commands.json
 # Web dependencies and local caches. Keep web/dist trackable for the static site.
 web/node_modules/
 web/.vite/
+web/public/
 
 # Compiled Object files
 *.slo
