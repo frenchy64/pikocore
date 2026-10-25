@@ -1785,10 +1785,8 @@ int main(void) {
 #endif
               if (selector_knob != selector_knob_before) {
                 has_saved = false;
-                for (uint8_t j = 1; j < NUM_KNOBS; j++) {
-                  input_knob[j].Reset();  // prevent spurious changes when
-                                          // changing selection
-                }
+                // prevent spurious changes to adjacent knob
+                input_knob[1].Reset();
               }
               ledarray_sel = selector_knob;
               ledarray_sel_debounce = 16000;
