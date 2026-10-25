@@ -1963,16 +1963,15 @@ int main(void) {
                   // tempo
                   {
                     // range: 50-305
-                    // ensure we can set at least the min and max tempo reliably by using twice the resolution
+                    // ensure we can set at least the min and max tempo reliably by using x1.5 the resolution
                     // of input_knob[i].Changed() for each end.
                     uint16_t bpm_set_new;
-                    if (input_knob[i].Value() < 200) {
+                    if (input_knob[i].Value() < 150) {
                       bpm_set_new = 50;
-                    } else if (input_knob[i].Value() >= input_knob[i].ValueMax() - 200) {
+                    } else if (input_knob[i].Value() >= input_knob[i].ValueMax() - 150) {
                       bpm_set_new = 305;
                     } else {
-                      //FIXME cannot select 55bpm
-                      bpm_set_new = round(((double)input_knob[i].Value() - 200) * 255.0 / (input_knob[i].ValueMax() - 400) / 5) *
+                      bpm_set_new = round(((double)input_knob[i].Value() - 150) * 255.0 / (input_knob[i].ValueMax() - 300) / 5) *
                         5 +
                         50;
                     }
@@ -2019,6 +2018,7 @@ int main(void) {
       }
     } else {
       ledarray.Clear();
+      //FIXME if probability_retrig, overrides sel led
       if (ledarray_sel_debounce > 0) {
         ledarray_sel_debounce--;
         ledarray.Set(ledarray_sel, 950);
