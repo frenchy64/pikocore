@@ -1962,10 +1962,19 @@ int main(void) {
                 case 7:
                   // tempo
                   {
-                    uint16_t bpm_set_new =
-                        round((double)input_knob[i].Value() * 255.0 / 4095 / 5) *
-                            5 +
+                    // range: 50-305
+                    // ensure we can set at least the min and max tempo reliably by using twice the resolution
+                    // of input_knob[i].Changed() for each end.
+                    uint16_t bpm_set_new;
+                    if (input_knob[i].Value() < 200) {
+                      bpm_set_new = 50;
+                    } else if (input_knob[i].Value() >= input_knob[i].ValueMax() - 200) {
+                      bpm_set_new = 305;
+                    } else {
+                      bpm_set_new = round((double)input_knob[i].Value() * 253.0 / input_knob[i].ValueMax() / 5) *
+                        5 +
                         50;
+                    }
                     ledarray_binary_debounce = 48000;
                     ledarray_binary = bpm_set_new - 50;
                     if (bpm_set_new > 360) bpm_set_new = 360;
