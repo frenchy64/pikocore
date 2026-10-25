@@ -1997,7 +1997,12 @@ int main(void) {
     output_trigger.Update();
 
     if (ledarray_binary_debounce > 0) {
-      ledarray_binary_debounce--;
+      if (ledarray_sel_debounce > 0) {
+        // give priority to selector knob indicator if it changes while displaying tempo
+        ledarray_binary_debounce = 0;
+      } else {
+        ledarray_binary_debounce--;
+      }
       ledarray.SetBinary(ledarray_binary);
     } else if (sequencer.IsRecording()) {
       ledarray.Clear();
