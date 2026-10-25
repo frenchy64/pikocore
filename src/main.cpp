@@ -1971,7 +1971,8 @@ int main(void) {
                     } else if (input_knob[i].Value() >= input_knob[i].ValueMax() - 200) {
                       bpm_set_new = 305;
                     } else {
-                      bpm_set_new = round((double)input_knob[i].Value() * 253.0 / input_knob[i].ValueMax() / 5) *
+                      //FIXME cannot select 55bpm
+                      bpm_set_new = round(((double)input_knob[i].Value() - 200) * 255.0 / (input_knob[i].ValueMax() - 400) / 5) *
                         5 +
                         50;
                     }
