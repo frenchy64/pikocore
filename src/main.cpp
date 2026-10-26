@@ -1759,8 +1759,11 @@ int main(void) {
       }
 
       // adc reading
-      if (!btn_retrig) {
+      if (true) {
         for (uint8_t i = 0; i < NUM_KNOBS; i++) {
+          // allow mode selection only during retrig
+          if (i != 0 && btn_retrig) break;
+
           input_knob[i].Read();
 
           // set the current midi note if a button is held down
@@ -1962,7 +1965,7 @@ int main(void) {
                 case 7:
                   // tempo
                   {
-                    // range: 50-305
+                    // range: 50-305, in 51 increments of 5
                     // ensure we can set at least the min and max tempo reliably by using x1.5 the resolution
                     // of input_knob[i].Changed() for each end.
                     uint16_t bpm_set_new;
@@ -2018,7 +2021,6 @@ int main(void) {
       }
     } else {
       ledarray.Clear();
-      //FIXME if probability_retrig, overrides sel led
       if (ledarray_sel_debounce > 0) {
         ledarray_sel_debounce--;
         ledarray.Set(ledarray_sel, 950);
