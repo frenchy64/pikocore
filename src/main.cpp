@@ -1759,7 +1759,7 @@ int main(void) {
       }
 
       // adc reading
-      if (true) {
+      // if (!btn_retrig) {
         for (uint8_t i = 0; i < NUM_KNOBS; i++) {
           // allow mode selection only during retrig
           if (i != 0 && btn_retrig) break;
@@ -2000,7 +2000,7 @@ int main(void) {
             }
           }
         }
-      }
+      // }
       // adc reading end
     }
 
