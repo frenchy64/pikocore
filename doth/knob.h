@@ -25,7 +25,7 @@ class Knob {
     uint16_t adc = 4095 - adc_read();
     val[0] = adc;
     // val[0] = ((alpha * adc) + (1024 - alpha) * val[0]) >> 10;
-    changed = abs(val[0] - val[1]) > 100;
+    changed = abs(val[0] - val[1]) > 76;
     if (changed) {
       val[1] = val[0];
     }
