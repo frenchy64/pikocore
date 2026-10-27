@@ -33,11 +33,11 @@ for i, ease in enumerate(ee):
     xmax = xs[-1]
     xmin_val = ys[0]
     xmax_val = ys[-1]
-    xspan = xmax-xmin
     print(f"uint8_t ease_{name}(uint16_t v) {{")
     print(f"\tv=v/8;")
-    print(f"\tuint8_t lookup[{xspan}] {{")
-    for j, _ in enumerate(xs):
+    print(f"\tuint8_t lookup[] {{")
+    for j, _ in enumerate(xs[1:-1]):
+        j = j+1
         x = xs[j]
         y = min(ys[j], 255)
         if j < xlen-1:
