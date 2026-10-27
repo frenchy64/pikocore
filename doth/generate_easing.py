@@ -36,14 +36,9 @@ for i, ease in enumerate(ee):
     print(f"uint8_t ease_{name}(uint16_t v) {{")
     print(f"\tv=v/8;")
     print(f"\tuint8_t lookup[] {{")
-    for j, _ in enumerate(xs[1:-1]):
-        j = j+1
-        x = xs[j]
+    for j in range(1, xlen-1):
         y = min(ys[j], 255)
-        if j < xlen-1:
-            print(f"\t{y},")
-        else:
-            print(f"\t{y}")
+        print(f"\t{y},")
     print("};")
     print(f"\tif (v < {xmin}) {{ return {xmin_val}; }}")
     print(f"\tif (v >= {xmax}) {{ return {xmax_val}; }}")
