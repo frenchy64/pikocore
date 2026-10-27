@@ -36,6 +36,7 @@ for i, ease in enumerate(ee):
     print(f"uint8_t ease_{name}(uint16_t v) {{")
     print(f"\tv=v/8;")
     print(f"\tuint8_t lookup[] {{")
+    # FIXME fill in the gaps, xs are sparse
     for j in range(1, xlen-1):
         y = min(ys[j], 255)
         print(f"\t{y},")
