@@ -112,8 +112,6 @@ uint8_t ease_distortion(uint16_t v) {
     return 241;
   } else if (v < 508) {
     return 242;
-  } else if (v < 509) {
-    return 255;
   }
   return 255;
 }
@@ -129,8 +127,6 @@ uint8_t ease_filter_fc(uint16_t v) {
     return 4;
   } else if (v < 10) {
     return 5;
-  } else if (v < 11) {
-    return 6;
   } else if (v < 13) {
     return 6;
   } else if (v < 14) {
@@ -149,8 +145,6 @@ uint8_t ease_filter_fc(uint16_t v) {
     return 17;
   } else if (v < 23) {
     return 19;
-  } else if (v < 24) {
-    return 21;
   } else if (v < 25) {
     return 21;
   } else if (v < 26) {
@@ -215,8 +209,6 @@ uint8_t ease_filter_fc(uint16_t v) {
     return 232;
   } else if (v < 59) {
     return 237;
-  } else if (v < 60) {
-    return 255;
   }
   return 255;
 }
@@ -224,22 +216,8 @@ uint8_t ease_probability_direction(uint16_t v) {
   v = v / 8;
   if (v < 2) {
     return 0;
-  } else if (v < 3) {
-    return 2;
-  } else if (v < 4) {
-    return 2;
-  } else if (v < 5) {
-    return 2;
-  } else if (v < 6) {
-    return 2;
-  } else if (v < 7) {
-    return 2;
-  } else if (v < 10) {
-    return 2;
   } else if (v < 11) {
     return 2;
-  } else if (v < 12) {
-    return 3;
   } else if (v < 14) {
     return 3;
   } else if (v < 18) {
@@ -306,24 +284,10 @@ uint8_t ease_probability_direction(uint16_t v) {
     return 11;
   } else if (v < 75) {
     return 10;
-  } else if (v < 77) {
-    return 9;
   } else if (v < 79) {
     return 9;
   } else if (v < 80) {
     return 8;
-  } else if (v < 81) {
-    return 7;
-  } else if (v < 83) {
-    return 7;
-  } else if (v < 85) {
-    return 7;
-  } else if (v < 86) {
-    return 7;
-  } else if (v < 87) {
-    return 7;
-  } else if (v < 89) {
-    return 7;
   } else if (v < 91) {
     return 7;
   } else if (v < 98) {
@@ -344,8 +308,6 @@ uint8_t ease_probability_direction(uint16_t v) {
     return 38;
   } else if (v < 117) {
     return 41;
-  } else if (v < 119) {
-    return 42;
   } else if (v < 123) {
     return 42;
   } else if (v < 124) {
@@ -374,24 +336,12 @@ uint8_t ease_probability_direction(uint16_t v) {
     return 16;
   } else if (v < 143) {
     return 15;
-  } else if (v < 144) {
-    return 13;
   } else if (v < 146) {
     return 13;
-  } else if (v < 147) {
-    return 12;
   } else if (v < 151) {
     return 12;
-  } else if (v < 152) {
-    return 10;
-  } else if (v < 155) {
-    return 10;
   } else if (v < 157) {
     return 10;
-  } else if (v < 159) {
-    return 9;
-  } else if (v < 160) {
-    return 9;
   } else if (v < 162) {
     return 9;
   } else if (v < 165) {
@@ -416,16 +366,6 @@ uint8_t ease_probability_direction(uint16_t v) {
     return 61;
   } else if (v < 186) {
     return 62;
-  } else if (v < 187) {
-    return 65;
-  } else if (v < 188) {
-    return 65;
-  } else if (v < 191) {
-    return 65;
-  } else if (v < 194) {
-    return 65;
-  } else if (v < 196) {
-    return 65;
   } else if (v < 199) {
     return 65;
   } else if (v < 201) {
@@ -458,8 +398,6 @@ uint8_t ease_probability_direction(uint16_t v) {
     return 11;
   } else if (v < 224) {
     return 9;
-  } else if (v < 229) {
-    return 8;
   } else if (v < 235) {
     return 8;
   } else if (v < 244) {
@@ -492,26 +430,12 @@ uint8_t ease_probability_direction(uint16_t v) {
     return 20;
   } else if (v < 274) {
     return 19;
-  } else if (v < 275) {
-    return 17;
   } else if (v < 278) {
     return 17;
   } else if (v < 280) {
     return 14;
-  } else if (v < 282) {
-    return 13;
   } else if (v < 285) {
     return 13;
-  } else if (v < 288) {
-    return 12;
-  } else if (v < 290) {
-    return 12;
-  } else if (v < 291) {
-    return 12;
-  } else if (v < 292) {
-    return 12;
-  } else if (v < 294) {
-    return 12;
   } else if (v < 295) {
     return 12;
   } else if (v < 297) {
@@ -538,14 +462,6 @@ uint8_t ease_probability_direction(uint16_t v) {
     return 38;
   } else if (v < 315) {
     return 39;
-  } else if (v < 316) {
-    return 40;
-  } else if (v < 317) {
-    return 40;
-  } else if (v < 318) {
-    return 40;
-  } else if (v < 319) {
-    return 40;
   } else if (v < 320) {
     return 40;
   } else if (v < 321) {
@@ -572,22 +488,8 @@ uint8_t ease_probability_direction(uint16_t v) {
     return 17;
   } else if (v < 335) {
     return 16;
-  } else if (v < 336) {
-    return 14;
   } else if (v < 337) {
     return 14;
-  } else if (v < 338) {
-    return 13;
-  } else if (v < 339) {
-    return 13;
-  } else if (v < 340) {
-    return 13;
-  } else if (v < 341) {
-    return 13;
-  } else if (v < 342) {
-    return 13;
-  } else if (v < 343) {
-    return 13;
   } else if (v < 346) {
     return 13;
   } else if (v < 348) {
@@ -618,10 +520,6 @@ uint8_t ease_probability_direction(uint16_t v) {
     return 77;
   } else if (v < 369) {
     return 80;
-  } else if (v < 370) {
-    return 82;
-  } else if (v < 371) {
-    return 82;
   } else if (v < 373) {
     return 82;
   } else if (v < 375) {
@@ -668,14 +566,6 @@ uint8_t ease_probability_direction(uint16_t v) {
     return 17;
   } else if (v < 415) {
     return 16;
-  } else if (v < 418) {
-    return 15;
-  } else if (v < 419) {
-    return 15;
-  } else if (v < 420) {
-    return 15;
-  } else if (v < 423) {
-    return 15;
   } else if (v < 425) {
     return 15;
   } else if (v < 427) {
@@ -698,16 +588,6 @@ uint8_t ease_probability_direction(uint16_t v) {
     return 65;
   } else if (v < 440) {
     return 70;
-  } else if (v < 442) {
-    return 73;
-  } else if (v < 443) {
-    return 73;
-  } else if (v < 444) {
-    return 73;
-  } else if (v < 447) {
-    return 73;
-  } else if (v < 449) {
-    return 73;
   } else if (v < 451) {
     return 73;
   } else if (v < 452) {
@@ -728,16 +608,8 @@ uint8_t ease_probability_direction(uint16_t v) {
     return 58;
   } else if (v < 467) {
     return 56;
-  } else if (v < 468) {
-    return 50;
   } else if (v < 469) {
     return 50;
-  } else if (v < 471) {
-    return 49;
-  } else if (v < 473) {
-    return 49;
-  } else if (v < 475) {
-    return 49;
   } else if (v < 476) {
     return 49;
   } else if (v < 479) {
@@ -758,8 +630,6 @@ uint8_t ease_probability_direction(uint16_t v) {
     return 89;
   } else if (v < 491) {
     return 93;
-  } else if (v < 492) {
-    return 96;
   }
   return 96;
 }
