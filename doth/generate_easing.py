@@ -28,20 +28,26 @@ for i, ease in enumerate(ee):
     xs = ease["x"]
     ys = ease["y"]
     name = ease["name"]
+    xlen = len(xs)
+    xmin = xs[0]
+    xmax = xs[-1]
+    xmin_val = ys[0]
+    xmax_val = ys[-1]
+    xspan = xmax-xmin
     print(f"uint8_t ease_{name}(uint16_t v) {{")
-    print("\tv=v/8;")
-    last_val = 0
+    print(f"\tv=v/8;")
+    print(f"\tuint8_t lookup[{xspan}] {{")
     for j, _ in enumerate(xs):
         x = xs[j]
-        y = ys[j]
-        if y > 255:
-            y = 255
-        last_val = y
-        if j == 0:
-            print(f"\tif (v<{x}) {{ return {y}; }}")
+        y = min(ys[j], 255)
+        if j < xlen-1:
+            print(f"\t{y},")
         else:
-            print(f"\telse if (v<{x}) {{ return  {y}; }}")
-    print(f"\t return {last_val};")
+            print(f"\t{y}")
+    print("};")
+    print(f"\tif (v < {xmin}) {{ return {xmin_val}; }}")
+    print(f"\tif (v > {xmax}) {{ return {xmax_val}; }}")
+    print(f"\treturn lookup[v-{xmin}];")
     print("}")
 
 
