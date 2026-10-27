@@ -46,7 +46,7 @@ for i, ease in enumerate(ee):
             print(f"\t{y}")
     print("};")
     print(f"\tif (v < {xmin}) {{ return {xmin_val}; }}")
-    print(f"\tif (v > {xmax}) {{ return {xmax_val}; }}")
+    print(f"\tif (v >= {xmax}) {{ return {xmax_val}; }}")
     print(f"\treturn lookup[v-{xmin}];")
     print("}")
 

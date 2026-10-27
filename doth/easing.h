@@ -8,7 +8,7 @@ uint8_t ease_distortion(uint16_t v) {
   if (v < 438) {
     return 0;
   }
-  if (v > 509) {
+  if (v >= 509) {
     return 255;
   }
   return lookup[v - 438];
@@ -23,7 +23,7 @@ uint8_t ease_filter_fc(uint16_t v) {
   if (v < 2) {
     return 0;
   }
-  if (v > 60) {
+  if (v >= 60) {
     return 255;
   }
   return lookup[v - 2];
@@ -49,7 +49,7 @@ uint8_t ease_probability_direction(uint16_t v) {
   if (v < 2) {
     return 0;
   }
-  if (v > 492) {
+  if (v >= 492) {
     return 97;
   }
   return lookup[v - 2];
@@ -79,7 +79,7 @@ uint8_t ease_probability_gate(uint16_t v) {
   if (v < 3) {
     return 0;
   }
-  if (v > 526) {
+  if (v >= 526) {
     return 0;
   }
   return lookup[v - 3];
@@ -115,7 +115,7 @@ uint8_t ease_probability_jump(uint16_t v) {
   if (v < 5) {
     return 0;
   }
-  if (v > 511) {
+  if (v >= 511) {
     return 253;
   }
   return lookup[v - 5];
@@ -147,7 +147,7 @@ uint8_t ease_probability_retrig(uint16_t v) {
   if (v < 1) {
     return 0;
   }
-  if (v > 513) {
+  if (v >= 513) {
     return 249;
   }
   return lookup[v - 1];
@@ -176,7 +176,7 @@ uint8_t ease_probability_tunnel(uint16_t v) {
   if (v < 3) {
     return 0;
   }
-  if (v > 538) {
+  if (v >= 538) {
     return 0;
   }
   return lookup[v - 3];
