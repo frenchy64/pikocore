@@ -22,15 +22,16 @@ for i, fname in enumerate(fnames):
                 continue
             x.append(int(nums[0]))
             y.append(min(255, int(nums[1])))
+    del y[-1]
     ee.append({"x": x, "y": y, "name": name})
 
 total_const_bytes = 0
 
-for i, ease in enumerate(ee):
+for ease in ee:
     xs = ease["x"]
     ys = ease["y"]
     name = ease["name"]
-    npoints = len(xs) # ys has an extra element
+    npoints = len(xs)
     xmin = xs[0]
     xmax = xs[npoints-1]
     xmin_val = ys[0]
