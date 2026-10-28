@@ -24,21 +24,22 @@ for i, fname in enumerate(fnames):
             y.append(min(255, int(nums[1])))
     ee.append({"x": x, "y": y, "name": name})
 
+total_const_bytes = 0
+
 for i, ease in enumerate(ee):
     xs = ease["x"]
     ys = ease["y"]
     name = ease["name"]
-    xlen = len(xs)
-    first_change = None
     npoints = len(xs) # ys has an extra element
     xmin = xs[0]
     xmax = xs[npoints-1]
     xmin_val = ys[0]
     xmax_val = ys[npoints-1]
     lookup_len = xmax-xmin+1
+    total_const_bytes += lookup_len
     lookup = [None] * lookup_len
     # set the known values
-    for i in range(0, xlen):
+    for i in range(0, npoints):
         lookup[xs[i]-xmin] = ys[i]
     # fill in the intermediate values
     for i in range(lookup_len-2, -1, -1):
@@ -46,15 +47,17 @@ for i, ease in enumerate(ee):
             lookup[i] = lookup[i+1]
     print(f"uint8_t ease_{name}(uint16_t v) {{")
     print(f"\tv=v/8;")
-    print(f"\tuint8_t lookup[] {{")
+    print(f"\tconstexpr uint8_t lookup[{lookup_len}] {{")
     for y in lookup:
         print(f"\t{y},")
     print("};")
     print(f"\tif (v < {xmin}) {{ return {xmin_val}; }}")
-    print(f"\tif (v >= {xmax}) {{ return {xmax_val}; }}")
+    print(f"\telse if (v > {xmax}) {{ return {xmax_val}; }}")
+    print(f"\t// {xmin}..{xmax} => {xmin-xmin}..{xmax-xmin}")
     print(f"\treturn lookup[v-{xmin}];")
     print("}")
 
+print(f"// const arrays = {total_const_bytes} bytes")
 
 try:
     import matplotlib.pyplot as plt
