@@ -21,27 +21,25 @@ for i, fname in enumerate(fnames):
             if int(nums[1]) < 0:
                 continue
             x.append(int(nums[0]))
-            y.append(int(nums[1]))
+            y.append(min(255, int(nums[1])))
     ee.append({"x": x, "y": y, "name": name})
 
-for ease in ee:
+for i, ease in enumerate(ee):
     xs = ease["x"]
     ys = ease["y"]
     name = ease["name"]
     xlen = len(xs)
+    first_change = None
+    npoints = len(xs) # ys has an extra element
     xmin = xs[0]
-    xmax = xs[-1]
+    xmax = xs[npoints-1]
     xmin_val = ys[0]
-    xmax_val = ys[-1]
+    xmax_val = ys[npoints-1]
     lookup_len = xmax-xmin+1
     lookup = [None] * lookup_len
     # set the known values
     for i in range(0, xlen):
-        x = xs[i]
-        y = min(ys[i], 255)
-        lookup_idx = x-xmin
-        lookup[lookup_idx] = y
-    
+        lookup[xs[i]-xmin] = ys[i]
     # fill in the intermediate values
     for i in range(lookup_len-2, -1, -1):
         if not lookup[i]:
