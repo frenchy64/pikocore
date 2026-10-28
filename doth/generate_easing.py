@@ -24,7 +24,7 @@ for i, fname in enumerate(fnames):
             y.append(int(nums[1]))
     ee.append({"x": x, "y": y, "name": name})
 
-for i, ease in enumerate(ee):
+for ease in ee:
     xs = ease["x"]
     ys = ease["y"]
     name = ease["name"]
@@ -33,12 +33,23 @@ for i, ease in enumerate(ee):
     xmax = xs[-1]
     xmin_val = ys[0]
     xmax_val = ys[-1]
+    lookup_len = xmax-xmin+1
+    lookup = [None] * lookup_len
+    # set the known values
+    for i in range(0, xlen):
+        x = xs[i]
+        y = min(ys[i], 255)
+        lookup_idx = x-xmin
+        lookup[lookup_idx] = y
+    
+    # fill in the intermediate values
+    for i in range(lookup_len-2, -1, -1):
+        if not lookup[i]:
+            lookup[i] = lookup[i+1]
     print(f"uint8_t ease_{name}(uint16_t v) {{")
     print(f"\tv=v/8;")
     print(f"\tuint8_t lookup[] {{")
-    # FIXME fill in the gaps, xs are sparse
-    for j in range(1, xlen-1):
-        y = min(ys[j], 255)
+    for y in lookup:
         print(f"\t{y},")
     print("};")
     print(f"\tif (v < {xmin}) {{ return {xmin_val}; }}")
