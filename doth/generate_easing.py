@@ -5,6 +5,8 @@ fnames = glob.glob("easings/*txt")
 fnames = list(fnames)
 fnames.sort()
 
+max_input_value = 511
+
 ee = []
 for i, fname in enumerate(fnames):
     x = []
@@ -22,6 +24,12 @@ for i, fname in enumerate(fnames):
                 continue
             x.append(int(nums[0]))
             y.append(min(255, int(nums[1])))
+            last_point = len(x)-1
+            if x[last_point] > max_input_value:
+                x[last_point] = max_input_value
+                y[last_point] = y[last_point-1]
+                break;
+
     del y[-1]
     ee.append({"x": x, "y": y, "name": name})
 
@@ -47,13 +55,14 @@ for ease in ee:
         if not lookup[i]:
             lookup[i] = lookup[i+1]
     print(f"uint8_t ease_{name}(uint16_t v) {{")
-    print(f"\tv=v/8;")
+    print(f"\tv=v/8; // 0..{max_input_value}")
     print(f"\tconstexpr uint8_t lookup[{lookup_len}] {{")
     for y in lookup:
         print(f"\t{y},")
     print("};")
     print(f"\tif (v < {xmin}) {{ return {xmin_val}; }}")
-    print(f"\telse if (v > {xmax}) {{ return {xmax_val}; }}")
+    if xmax < max_input_value:
+        print(f"\telse if (v > {xmax}) {{ return {xmax_val}; }}")
     print(f"\t// {xmin}..{xmax} => {xmin-xmin}..{xmax-xmin}")
     print(f"\treturn lookup[v-{xmin}];")
     print("}")
