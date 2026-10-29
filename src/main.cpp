@@ -250,7 +250,7 @@ void param_set_break(uint16_t knob_val, uint8_t &filter_fc_,
                      uint8_t &probability_direction_,
                      uint8_t &probability_tunnel_,
                      uint8_t save_data_[FLASH_PAGE_SIZE]) {
-  if (knob_val < 50) {
+  if (knob_val < 50) { // easing functions hardcode 50 as minimum expected value
     // turn it all off
     distortion_ = 0;
     probability_jump_ = 0;
@@ -259,6 +259,7 @@ void param_set_break(uint16_t knob_val, uint8_t &filter_fc_,
     probability_direction_ = 0;
     probability_tunnel_ = 0;
   } else {
+    knob_val = knob_val / 8;
     distortion_ = ease_distortion(knob_val) * DISTORTION_MAX / 255;
     probability_jump_ = ease_probability_jump(knob_val);
     probability_retrig_ = ease_probability_retrig(knob_val);
@@ -268,8 +269,8 @@ void param_set_break(uint16_t knob_val, uint8_t &filter_fc_,
   }
   save_data_[SAVE_PROB_JUMP] = probability_jump_;
   save_data_[SAVE_PROB_DIRECTION] = probability_direction_;
-  save_data_[SAVE_PROB_RETRIG] = probability_jump_;
-  save_data_[SAVE_PROB_GATE] = probability_direction_;
+  save_data_[SAVE_PROB_RETRIG] = probability_retrig_;
+  save_data_[SAVE_PROB_GATE] = probability_gate_;
   save_data_[SAVE_PROB_TUNNEL] = probability_tunnel_;
   save_data_[SAVE_VOLUME] =
       (uint8_t)((distortion_ * 1095 / DISTORTION_MAX + 3000) >> 8);
@@ -1759,8 +1760,11 @@ int main(void) {
       }
 
       // adc reading
-      if (!btn_retrig) {
+      // if (!btn_retrig) {
         for (uint8_t i = 0; i < NUM_KNOBS; i++) {
+          // allow mode selection only during retrig
+          if (i != 0 && btn_retrig) break;
+
           input_knob[i].Read();
 
           // set the current midi note if a button is held down
@@ -1785,13 +1789,12 @@ int main(void) {
 #endif
               if (selector_knob != selector_knob_before) {
                 has_saved = false;
-                for (uint8_t j = 1; j < NUM_KNOBS; j++) {
-                  input_knob[j].Reset();  // prevent spurious changes when
-                                          // changing selection
-                }
+                // prevent spurious changes to adjacent knob
+                input_knob[1].Reset();
               }
               ledarray_sel = selector_knob;
               ledarray_sel_debounce = 16000;
+              if (ledarray_binary_debounce != 0) ledarray_binary_debounce = 0;
               sequencer.SetRecording(false);
               if (first_time) {
                 first_time = false;
@@ -1919,7 +1922,7 @@ int main(void) {
                     probability_gate = (input_knob[i].Value() * 254 /
                                         input_knob[i].ValueMax());
                   }
-                  save_data[SAVE_PROB_GATE] = probability_direction;
+                  save_data[SAVE_PROB_GATE] = probability_gate;
                   break;
                 case 3:
                   // retrig probability
@@ -1929,7 +1932,7 @@ int main(void) {
                     probability_retrig = (input_knob[i].Value() * 254 /
                                           input_knob[i].ValueMax());
                   }
-                  save_data[SAVE_PROB_RETRIG] = probability_jump;
+                  save_data[SAVE_PROB_RETRIG] = probability_retrig;
                   break;
                 case 4:
                   // reverse probability
@@ -1964,8 +1967,9 @@ int main(void) {
                 case 7:
                   // tempo
                   {
+                    // works well with at Knob.Changed() recognizing differences of at least 77
                     uint16_t bpm_set_new =
-                        round((double)input_knob[i].Value() * 255.0 / 4095 / 5) *
+                        floor((double)input_knob[i].Value() / (4100.0 / 52.0)) *
                             5 +
                         50;
                     ledarray_binary_debounce = 48000;
@@ -1989,7 +1993,7 @@ int main(void) {
             }
           }
         }
-      }
+      // }
       // adc reading end
     }
 
