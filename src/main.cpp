@@ -250,7 +250,7 @@ void param_set_break(uint16_t knob_val, uint8_t &filter_fc_,
                      uint8_t &probability_direction_,
                      uint8_t &probability_tunnel_,
                      uint8_t save_data_[FLASH_PAGE_SIZE]) {
-  if (knob_val < 50) {
+  if (knob_val < 50) { // easing functions hardcode 50 as minimum expected value
     // turn it all off
     distortion_ = 0;
     probability_jump_ = 0;
@@ -259,6 +259,7 @@ void param_set_break(uint16_t knob_val, uint8_t &filter_fc_,
     probability_direction_ = 0;
     probability_tunnel_ = 0;
   } else {
+    knob_val = knob_val / 8;
     distortion_ = ease_distortion(knob_val) * DISTORTION_MAX / 255;
     probability_jump_ = ease_probability_jump(knob_val);
     probability_retrig_ = ease_probability_retrig(knob_val);

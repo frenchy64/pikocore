@@ -5,9 +5,11 @@ fnames = glob.glob("easings/*txt")
 fnames = list(fnames)
 fnames.sort()
 
-easing_min_threshold_12_bit = 50
-max_input_value = 511
-min_input_value = int((easing_min_threshold_12_bit/4095)*max_input_value)
+knob_bits = 12
+min_knob_value = 50
+max_knob_value = 2**knob_bits-1
+max_input_value = int(max_knob_value / 8)
+min_input_value = int((min_knob_value/max_knob_value)*max_input_value)
 
 ee = []
 for i, fname in enumerate(fnames):
@@ -59,15 +61,16 @@ for ease in ee:
     for i in range(lookup_len-2, -1, -1):
         if not lookup[i]:
             lookup[i] = lookup[i+1]
+    print(f"// v = {min_input_value}..{max_input_value}")
     print(f"uint8_t ease_{name}(uint16_t v) {{")
-    print(f"\tv=v/8; // {min_input_value}..{max_input_value}")
     print(f"\tconstexpr uint8_t lookup[{lookup_len}] {{")
     for y in lookup:
         print(f"\t{y},")
     print("};")
-    print(f"\tif (v < {xmin}) {{ return {xmin_val}; }}")
+    if xmin > min_input_value:
+        print(f"\tif (v < {xmin}) {{ return {xmin_val}; }}")
     if xmax < max_input_value:
-        print(f"\telse if (v > {xmax}) {{ return {xmax_val}; }}")
+        print(f"\tif (v > {xmax}) {{ return {xmax_val}; }}")
     print(f"\t// {xmin}..{xmax} => {xmin-xmin}..{xmax-xmin}")
     print(f"\treturn lookup[v-{xmin}];")
     print("}")

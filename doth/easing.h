@@ -1,5 +1,5 @@
+// v = 6..511
 uint8_t ease_distortion(uint16_t v) {
-  v = v / 8;  // 6..511
   constexpr uint8_t lookup[72]{
       1,   1,   1,   3,   3,   5,   8,   9,   11,  11,  11,  12,  13,  15,  15,
       17,  17,  20,  20,  23,  25,  25,  25,  28,  29,  33,  34,  34,  36,  38,
@@ -9,14 +9,15 @@ uint8_t ease_distortion(uint16_t v) {
   };
   if (v < 438) {
     return 0;
-  } else if (v > 509) {
+  }
+  if (v > 509) {
     return 255;
   }
   // 438..509 => 0..71
   return lookup[v - 438];
 }
+// v = 6..511
 uint8_t ease_filter_fc(uint16_t v) {
-  v = v / 8;  // 6..511
   constexpr uint8_t lookup[54]{
       4,   4,   4,   5,   6,   6,   6,   8,   10,  10,  12,  13,  14,  14,
       15,  17,  19,  21,  21,  23,  27,  28,  30,  32,  35,  39,  41,  43,
@@ -25,14 +26,15 @@ uint8_t ease_filter_fc(uint16_t v) {
   };
   if (v < 7) {
     return 0;
-  } else if (v > 60) {
+  }
+  if (v > 60) {
     return 255;
   }
   // 7..60 => 0..53
   return lookup[v - 7];
 }
+// v = 6..511
 uint8_t ease_probability_direction(uint16_t v) {
-  v = v / 8;  // 6..511
   constexpr uint8_t lookup[487]{
       2,  2,  2,  2,  2,  2,  3,  3,  3,  4,  4,  4,  4,  7,  7,  9,  9,  9,
       9,  12, 12, 12, 16, 16, 16, 16, 16, 21, 21, 21, 23, 23, 25, 25, 25, 28,
@@ -63,16 +65,14 @@ uint8_t ease_probability_direction(uint16_t v) {
       49, 49, 49, 50, 50, 50, 53, 53, 60, 64, 69, 69, 77, 77, 81, 81, 89, 93,
       96,
   };
-  if (v < 6) {
-    return 0;
-  } else if (v > 492) {
+  if (v > 492) {
     return 96;
   }
   // 6..492 => 0..486
   return lookup[v - 6];
 }
+// v = 6..511
 uint8_t ease_probability_gate(uint16_t v) {
-  v = v / 8;  // 6..511
   constexpr uint8_t lookup[506]{
       9,   9,   9,   9,   13,  15,  17,  17,  17,  17,  17,  18,  19,  19,  19,
       20,  20,  20,  20,  20,  20,  20,  20,  20,  20,  20,  19,  19,  18,  17,
@@ -109,14 +109,11 @@ uint8_t ease_probability_gate(uint16_t v) {
       16,  16,  15,  15,  15,  14,  13,  13,  13,  13,  13,  13,  12,  12,  10,
       10,  10,  10,  10,  9,   9,   9,   8,   8,   8,   8,
   };
-  if (v < 6) {
-    return 0;
-  }
   // 6..511 => 0..505
   return lookup[v - 6];
 }
+// v = 6..511
 uint8_t ease_probability_jump(uint16_t v) {
-  v = v / 8;  // 6..511
   constexpr uint8_t lookup[506]{
       1,   1,   3,   5,   5,   5,   6,   7,   9,   9,   9,   9,   9,   9,   9,
       11,  11,  11,  12,  13,  13,  13,  13,  13,  13,  13,  13,  12,  12,  12,
@@ -153,14 +150,11 @@ uint8_t ease_probability_jump(uint16_t v) {
       177, 182, 182, 193, 193, 197, 199, 203, 205, 207, 210, 210, 217, 220, 222,
       226, 229, 230, 232, 235, 237, 240, 241, 241, 241, 250,
   };
-  if (v < 6) {
-    return 0;
-  }
   // 6..511 => 0..505
   return lookup[v - 6];
 }
+// v = 6..511
 uint8_t ease_probability_retrig(uint16_t v) {
-  v = v / 8;  // 6..511
   constexpr uint8_t lookup[505]{
       8,   8,   8,   8,   8,   12,  12,  12,  16,  16,  20,  20,  22,  25,  28,
       28,  30,  34,  39,  41,  43,  44,  44,  44,  45,  45,  45,  45,  45,  45,
@@ -203,8 +197,8 @@ uint8_t ease_probability_retrig(uint16_t v) {
   // 7..511 => 0..504
   return lookup[v - 7];
 }
+// v = 6..511
 uint8_t ease_probability_tunnel(uint16_t v) {
-  v = v / 8;  // 6..511
   constexpr uint8_t lookup[506]{
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
       1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
@@ -241,9 +235,6 @@ uint8_t ease_probability_tunnel(uint16_t v) {
       15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,
       15,  15,  15,  15,  15,  15,  15,  15,  15,  15,  15,
   };
-  if (v < 6) {
-    return 0;
-  }
   // 6..511 => 0..505
   return lookup[v - 6];
 }
