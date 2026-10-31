@@ -184,7 +184,7 @@ uint8_t probability_tunnel = 0;  // jumps between samples
 
 // retriggering / fx
 bool fx_retrig = false;
-bool btn_retrig = 0;
+bool btn_retrig = false;
 uint8_t retrig_sel = 4;
 uint8_t retrig_count = 0;
 uint8_t retrig_max = 2;
@@ -1762,25 +1762,30 @@ int main(void) {
       // adc reading
       // if (!btn_retrig) {
         for (uint8_t i = 0; i < NUM_KNOBS; i++) {
-          // allow mode selection only during retrig
-          if (i != 0 && btn_retrig) break;
-
-          input_knob[i].Read();
-
-          // set the current midi note if a button is held down
-          if (input_knob[i].Changed() && i == 0) {
-            // midi_notes_set
-            for (uint8_t j = 0; j < NUM_BUTTONS; j++) {
-              if (input_button[j].On()) {
-                midi_notes_set[j] =
-                    midi_notes_available[input_knob[i].Value() *
-                                         MIDI_NOTES_AVAILABLE_TOTAL / 4095];
-              }
+          // disallow certain ops during retrig
+          if (btn_retrig) {
+            // if (i == 0) allow mode selection
+            if (i == 1) {
+              // allow filter, gate, jump probability, distortion
+              if (selector_knob != 1 && selector_knob != 2 && selector_knob != 3 && selector_knob != 7) continue;
+            } else if (i == 2) {
+              continue;
             }
           }
-
+          input_knob[i].Read();
           if (input_knob[i].Changed() || first_time) {
             if (i == 0) {
+              // set the current midi note if a button is held down
+              if (!btn_retrig) {
+                // midi_notes_set
+                for (uint8_t j = 0; j < NUM_BUTTONS; j++) {
+                  if (input_button[j].On()) {
+                    midi_notes_set[j] =
+                        midi_notes_available[input_knob[i].Value() *
+                                             MIDI_NOTES_AVAILABLE_TOTAL / 4095];
+                  }
+                }
+              }
               uint8_t selector_knob_before = selector_knob;
               selector_knob =
                   (input_knob[i].Value() * 8 / input_knob[i].ValueMax());
