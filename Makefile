@@ -65,5 +65,8 @@ endif
 
 pico-sdk:
 	git clone https://github.com/raspberrypi/pico-sdk
-	cd pico-sdk && git checkout 2.2.0
+	cd pico-sdk && git checkout 2.3.0
 	cd pico-sdk && git submodule update --init
+
+debug:
+	minicom -b 115200 -o -D /dev/ttyACM0

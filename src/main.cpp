@@ -31,6 +31,7 @@
 #include "doth/ledarray.h"
 #include "doth/onewiremidi.h"
 #include "doth/sequencer.h"
+#include "doth/tempo_knob.h"
 #include "doth/trigger_out.h"
 
 // constants
@@ -1973,10 +1974,7 @@ int main(void) {
                   // tempo
                   {
                     // works well with at Knob.Changed() recognizing differences of at least 77
-                    uint16_t bpm_set_new =
-                        floor((double)input_knob[i].Value() / (4100.0 / 52.0)) *
-                            5 +
-                        50;
+                    uint16_t bpm_set_new = bpm_set_new_from_knob(input_knob[i].Value());
                     ledarray_binary_debounce = 48000;
                     ledarray_binary = bpm_set_new - 50;
                     if (bpm_set_new > 360) bpm_set_new = 360;

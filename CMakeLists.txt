@@ -53,7 +53,7 @@ function(add_pikocore_firmware TARGET_NAME OUTPUT_BASENAME FLASH_SIZE_BYTES)
 	set_property(TARGET ${TARGET_NAME} APPEND_STRING PROPERTY LINK_FLAGS "-Wl,--print-memory-usage")
 
 	pico_set_binary_type(${TARGET_NAME} copy_to_ram)
-	pico_enable_stdio_usb(${TARGET_NAME} 0)
+	pico_enable_stdio_usb(${TARGET_NAME} 1)
 	pico_enable_stdio_uart(${TARGET_NAME} 0)
 
 	target_include_directories(${TARGET_NAME} PRIVATE

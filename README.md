@@ -53,6 +53,8 @@ If you have a V2 PCB layout where the Function A and Function B knobs are swappe
 
 ## dev
 
-You can open a minicom terminal by running `make debug` after switching on `DEBUG_X` flags in `main.cpp`.
+You can open a minicom terminal by running `make debug` after:
+1. switching on `DEBUG_X` flags in `target_compile_definitions.cmake`.
+2. setting `pico_enable_stdio_usb(${TARGET_NAME} 1)` in `CMakeLists.txt`.
 
 Easing functions generated with: https://editor.p5js.org/schollz/sketches/l5F_ZWjZM

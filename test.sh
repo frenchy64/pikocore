@@ -11,4 +11,4 @@ fi
 cd build
 cmake ..
 cmake --build . --target all
-ctest
+ctest --output-on-failure

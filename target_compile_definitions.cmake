@@ -9,4 +9,5 @@ target_compile_definitions(${PIKOCODE_TARGET} PRIVATE
     MIDI_CLOCK_MULTIPLIER=2
     MIDI_NOTE_KEY=0
     PCB_V2_LAYOUT=0
+    DEBUG_KNOB=1
 )
