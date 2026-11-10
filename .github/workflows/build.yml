@@ -36,3 +36,6 @@ jobs:
 
       - name: Build uf2
         run: make build
+
+      - name: Test
+        run: ./test.sh

@@ -4,12 +4,24 @@ project(pikocore_native_tests CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(clock_sync_test
-  clock_sync_test.cpp
-  ../src/ClockSync.cpp
-)
-target_include_directories(clock_sync_test PRIVATE ../src)
-target_compile_options(clock_sync_test PRIVATE -Wall -Wextra -Werror)
+function(AddPikocoreNativeTest TestName SourceFiles IncludeDirs)
+  add_executable(${TestName}
+    "${TestName}.cpp"
+    ${SourceFiles}
+  )
+  target_include_directories(${TestName} PRIVATE ${IncludeDirs})
+  target_compile_options(${TestName} PRIVATE -Wall -Wextra -Werror)
+  add_test(NAME ${TestName} COMMAND ${TestName})
+endfunction()
 
 enable_testing()
-add_test(NAME clock_sync_test COMMAND clock_sync_test)
+AddPikocoreNativeTest(
+  clock_sync_test
+  ../src/ClockSync.cpp
+  ../src
+)
+AddPikocoreNativeTest(
+  tempo_knob_test
+  tempo_knob_test.cpp
+  ../doth
+)

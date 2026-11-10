@@ -6,6 +6,7 @@ pico-sdk/
 build/*
 !build/
 !build/pikocore.uf2
+tests/build/*
 CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
@@ -47,3 +48,6 @@ web/.vite/
 
 # macOS
 .DS_Store
+
+# Python virtual environment
+.venv
