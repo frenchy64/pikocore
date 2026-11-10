@@ -9,7 +9,7 @@ JOBS ?= $(shell getconf _NPROCESSORS_ONLN 2>/dev/null || sysctl -n hw.ncpu 2>/de
 WEB_PUBLIC_DIR := web/public
 WEB_UF2 := $(WEB_PUBLIC_DIR)/pikocore.uf2
 
-.PHONY: build buildit justbuild quick publish-web-uf2 webapp-build test clean prereqs easing.h filter.h
+.PHONY: build buildit justbuild quick publish-web-uf2 webapp-build test clean prereqs easing.h filter.h pico-sdk
 
 buildit: quick
 
@@ -40,9 +40,8 @@ filter.h: doth/filter.h
 
 quick: target_compile_definitions.cmake doth/easing.h doth/filter.h
 	@test -n "$(PICO_SDK_PATH)" || (echo "PICO_SDK_PATH not found. Set PICO_SDK_PATH or run 'make pico-sdk'."; exit 1)
-	mkdir -p build
-	cd build && cmake -DPICO_SDK_PATH="$(PICO_SDK_PATH)" ..
-	cd build && make -j$(JOBS)
+	[ -d "build" ] || cmake -DPICO_SDK_PATH="$(PICO_SDK_PATH)" -B build 
+	cmake --build build --parallel $(JOBS)
 	echo "BUILD SUCCESS"
 
 webapp-build: publish-web-uf2
@@ -64,8 +63,8 @@ else
 endif
 
 pico-sdk:
-	git clone https://github.com/raspberrypi/pico-sdk
-	cd pico-sdk && git checkout 2.3.0
+	git -C pico-sdk fetch || git clone https://github.com/raspberrypi/pico-sdk
+	cd pico-sdk && git checkout 2.3.1
 	cd pico-sdk && git submodule update --init
 
 debug:

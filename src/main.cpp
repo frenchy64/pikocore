@@ -1800,7 +1800,7 @@ int main(void) {
               }
               ledarray_sel = selector_knob;
               ledarray_sel_debounce = 16000;
-              if (ledarray_binary_debounce != 0) ledarray_binary_debounce = 0;
+              ledarray_binary_debounce = 0;
               sequencer.SetRecording(false);
               if (first_time) {
                 first_time = false;
